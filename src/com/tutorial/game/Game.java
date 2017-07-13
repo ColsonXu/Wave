@@ -7,28 +7,39 @@ import java.util.Random;
 /**
  * Created by found on 10-Jul-17.
  */
+
 public class Game extends Canvas implements Runnable {
 
+	private static final long serialVersionUID = -1679878377156176010L;
+	
+	// Defining window's dimensions
     public static final int WIDTH = 1324, HEIGHT = WIDTH / 12 * 9;
+    // Create a new thread
     private Thread thread;
+    // An indicator of if the game is currently running.
     private boolean running = false;
 
     private Random r;
 
+    // Create a handler
     private Handler handler;
 
 
     public Game() {
+        // Initialize the handler
+        handler = new Handler();
+        this.addKeyListener(new KeyInput(handler));
+        
+        // Create the window
         new Window(WIDTH, HEIGHT, "Let's Build a Game!", this);
 
-        handler = new Handler();
         r = new Random();
-
-        for (int i = 0; i < 50; i++) {
-            handler.addObject(new Player(0, 0, ID.Player));
-        }
-
+        
+        handler.addObject(new Player(200, 200, ID.Player));
+        handler.addObject(new Player(100, 200, ID.Player2));
+        
     }
+
 
     public synchronized void start() {
         thread = new Thread(this);
@@ -45,6 +56,7 @@ public class Game extends Canvas implements Runnable {
         }
     }
 
+    // Game loop
     public void run() {
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
@@ -73,9 +85,11 @@ public class Game extends Canvas implements Runnable {
         stop();
     }
 
+
     private void tick() {
         handler.tick();
     }
+
 
     private void render() {
         BufferStrategy bs = this.getBufferStrategy();
@@ -94,6 +108,7 @@ public class Game extends Canvas implements Runnable {
         g.dispose();
         bs.show();
     }
+
 
     public static void main(String args[]) {
         new Game();

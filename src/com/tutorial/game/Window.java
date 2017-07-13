@@ -8,7 +8,9 @@ import java.awt.*;
  */
 public class Window extends Canvas{
 
-    public Window(int width, int height, String title, Game game) {
+	private static final long serialVersionUID = 4178563373392080989L;
+
+	public Window(int width, int height, String title, Game game) {
         JFrame frame = new JFrame(title);
 
         frame.setPreferredSize(new Dimension(width, height));

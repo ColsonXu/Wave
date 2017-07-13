@@ -13,8 +13,8 @@ public class Player extends GameObject {
     public Player(int x, int y, ID id) {
         super(x, y, id);
 
-        vX = r.nextInt(5) + 1;
-        vY = r.nextInt(5) + 1;
+        vX = 0;
+        vY = 0;
 
     }
 
@@ -24,8 +24,9 @@ public class Player extends GameObject {
     }
 
     public void render(Graphics g) {
-       g.setColor(Color.white);
-       g.fillRect(x, y, 32, 32);
+    	if(id == ID.Player) g.setColor(Color.white);
+    	else if(id == ID.Player2) g.setColor(Color.blue);
+    	g.fillRect(x, y, 32, 32);
     }
 
 }
