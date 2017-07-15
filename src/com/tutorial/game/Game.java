@@ -2,7 +2,6 @@ package com.tutorial.game;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.util.Random;
 
 /**
  * Created by found on 10-Jul-17.
@@ -18,11 +17,11 @@ public class Game extends Canvas implements Runnable {
     private Thread thread;
     // An indicator of if the game is currently running.
     private boolean running = false;
-
-    private Random r;
-
     // Create a handler
     private Handler handler;
+    // Create a HUD object;
+    private HUD hud;
+    
 
 
     public Game() {
@@ -32,11 +31,11 @@ public class Game extends Canvas implements Runnable {
         
         // Create the window
         new Window(WIDTH, HEIGHT, "Let's Build a Game!", this);
-
-        r = new Random();
         
-        handler.addObject(new Player(200, 200, ID.Player));
-        handler.addObject(new Player(100, 200, ID.Player2));
+        hud = new HUD();
+        
+        handler.addObject(new Player(200, 200, ID.Player, handler));
+        handler.addObject(new BasicEnemy(200, 200, ID.basicEnemy));
         
     }
 
@@ -58,6 +57,7 @@ public class Game extends Canvas implements Runnable {
 
     // Game loop
     public void run() {
+    	this.requestFocus();
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
         double ns = 1000000000 / amountOfTicks;
@@ -85,9 +85,9 @@ public class Game extends Canvas implements Runnable {
         stop();
     }
 
-
     private void tick() {
         handler.tick();
+        hud.tick();
     }
 
 
@@ -102,13 +102,25 @@ public class Game extends Canvas implements Runnable {
 
         g.setColor(Color.black);
         g.fillRect(0, 0, WIDTH, HEIGHT);
-
+        
         handler.render(g);
-
+        // hud.render() has to be below the handler.render()
+        // Otherwise the HUD will be under GameObjects
+        hud.render(g);
+        
         g.dispose();
         bs.show();
     }
 
+    public static int clamp(int var, int min, int max) {
+    	if (var <= min) {
+    		return var = min;
+    	} else if (var >= max) {
+    		return var = max;
+    	} else {
+    		return var;
+    	}
+    }
 
     public static void main(String args[]) {
         new Game();

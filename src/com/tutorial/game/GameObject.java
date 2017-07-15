@@ -1,6 +1,7 @@
 package com.tutorial.game;
 
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Rectangle;
 
 /**
  * Created by found on 10-Jul-17.
@@ -19,6 +20,7 @@ public abstract class GameObject {
 
     public abstract void tick();
     public abstract void render(Graphics g);
+    public abstract Rectangle getBounds();
 
     public void setX(int x) {
         this.x = x;

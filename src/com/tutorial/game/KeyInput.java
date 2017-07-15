@@ -14,6 +14,9 @@ public class KeyInput extends KeyAdapter {
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		
+		// Escape key to exit the game.
+		if (key == KeyEvent.VK_ESCAPE) System.exit(1);
+		
 		// Debugging line: System.out.println(key);
 		for (int i = 0; i < handler.object.size(); i++) {
 			GameObject tempObject = handler.object.get(i);
@@ -26,19 +29,8 @@ public class KeyInput extends KeyAdapter {
 				if (key == KeyEvent.VK_D) tempObject.setVX(8);
 				
 			}
-			
-			if (tempObject.getID() == ID.Player2) {
-				
-				// Key events for Player2
-				if (key == KeyEvent.VK_UP) tempObject.setVY(-8);
-				if (key == KeyEvent.VK_DOWN) tempObject.setVY(8);
-				if (key == KeyEvent.VK_LEFT) tempObject.setVX(-8);
-				if (key == KeyEvent.VK_RIGHT) tempObject.setVX(8);
-				
-			}
 		}
 	}
-	
 	
 	
 	public void keyReleased(KeyEvent e) {
@@ -52,16 +44,6 @@ public class KeyInput extends KeyAdapter {
 				if (key == KeyEvent.VK_S) tempObject.setVY(0);
 				if (key == KeyEvent.VK_A) tempObject.setVX(0);
 				if (key == KeyEvent.VK_D) tempObject.setVX(0);
-				
-			}
-			
-			if (tempObject.getID() == ID.Player2) {
-				
-				// Key events for Player2
-				if (key == KeyEvent.VK_UP) tempObject.setVY(0);
-				if (key == KeyEvent.VK_DOWN) tempObject.setVY(0);
-				if (key == KeyEvent.VK_LEFT) tempObject.setVX(0);
-				if (key == KeyEvent.VK_RIGHT) tempObject.setVX(0);
 				
 			}
 		}

@@ -1,31 +1,52 @@
 package com.tutorial.game;
 
 import java.awt.*;
-import java.util.Random;
 
 /**
  * Created by found on 10-Jul-17.
  */
 public class Player extends GameObject {
 
-    Random r = new Random();
-
-    public Player(int x, int y, ID id) {
+	Handler handler;
+	
+    public Player(int x, int y, ID id, Handler handler) {
         super(x, y, id);
-
+        this.handler = handler;
+        
         vX = 0;
         vY = 0;
-
+    }
+    
+    public Rectangle getBounds() {
+		return new Rectangle(x, y, 32, 32);
     }
 
     public void tick() {
-        x += vX;
+    	x = Game.clamp(x, 8, Game.WIDTH - 47);
+    	y = Game.clamp(y, 8, Game.HEIGHT - 80);
+    	
+    	x += vX;
         y += vY;
+        
+        collision();
+    }
+    
+    public void collision() {
+    	
+    	for (int i = 0; i < handler.object.size(); i++) {
+    		GameObject tempObject = handler.object.get(i);
+    		if (tempObject.getID() == ID.basicEnemy) {
+    			// collision detection
+    			if (getBounds().intersects(tempObject.getBounds())) {
+    				HUD.HEALTH -= 2;
+    			}
+    		}
+    	}
+    	
     }
 
     public void render(Graphics g) {
     	if(id == ID.Player) g.setColor(Color.white);
-    	else if(id == ID.Player2) g.setColor(Color.blue);
     	g.fillRect(x, y, 32, 32);
     }
 

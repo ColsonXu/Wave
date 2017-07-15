@@ -1,6 +1,7 @@
 package com.tutorial.game;
 
-import java.awt.*;
+
+import java.awt.Graphics;
 import java.util.LinkedList;
 
 /**
