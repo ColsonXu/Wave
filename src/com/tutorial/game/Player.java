@@ -29,6 +29,8 @@ public class Player extends GameObject {
         y += vY;
         
         collision();
+        
+        handler.addObject(new Trail(x, y, 32, 32, Color.white, (float) 0.09, ID.Trail, handler));
     }
     
     public void collision() {

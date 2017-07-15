@@ -19,9 +19,10 @@ public class Game extends Canvas implements Runnable {
     private boolean running = false;
     // Create a handler
     private Handler handler;
-    // Create a HUD object;
+    // Create a HUD object
     private HUD hud;
-    
+    // Create spawn object
+    private Spawn spawnSystem;
 
 
     public Game() {
@@ -33,9 +34,8 @@ public class Game extends Canvas implements Runnable {
         new Window(WIDTH, HEIGHT, "Let's Build a Game!", this);
         
         hud = new HUD();
-        
+        spawnSystem = new Spawn(handler, hud);
         handler.addObject(new Player(200, 200, ID.Player, handler));
-        handler.addObject(new BasicEnemy(200, 200, ID.basicEnemy));
         
     }
 

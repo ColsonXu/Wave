@@ -6,8 +6,11 @@ import java.awt.Rectangle;
 
 public class BasicEnemy extends GameObject {
 
-	public BasicEnemy(int x, int y, ID id) {
+	private Handler handler;
+	
+	public BasicEnemy(int x, int y, ID id, Handler handler) {
 		super(x, y, id);
+		this.handler = handler;
 		
 		vX = 5;
 		vY = 5;
@@ -26,6 +29,9 @@ public class BasicEnemy extends GameObject {
 		// the border
 		if (y <= 0 || y >= Game.HEIGHT - 56) vY *= -1;
 		if (x <= 0 || x >= Game.WIDTH - 20) vX *= -1;
+		
+		// Add trail object
+		handler.addObject(new Trail(x, y, 16, 16, Color.red, (float) 0.04, ID.Trail, handler));
 	}
 	
 	public void render(Graphics g) {

@@ -6,6 +6,7 @@ package com.tutorial.game;
 public enum ID {
 
     Player(),
-    basicEnemy();
+    basicEnemy(),
+	Trail();
 
 }
