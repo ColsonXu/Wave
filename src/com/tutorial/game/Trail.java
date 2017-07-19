@@ -35,7 +35,7 @@ public class Trail extends GameObject{
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setComposite(makeTransparent(alpha));
 		g.setColor(trailColor);
-		g.fillRect(x, y, width, height);
+		g.fillRect((int)x, (int)y, width, height);
 		g2d.setComposite(makeTransparent(1));
 	}
 	

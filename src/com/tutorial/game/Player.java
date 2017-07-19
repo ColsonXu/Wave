@@ -18,7 +18,7 @@ public class Player extends GameObject {
     }
     
     public Rectangle getBounds() {
-		return new Rectangle(x, y, 32, 32);
+		return new Rectangle((int)x, (int)y, 32, 32);
     }
 
     public void tick() {
@@ -30,14 +30,22 @@ public class Player extends GameObject {
         
         collision();
         
-        handler.addObject(new Trail(x, y, 32, 32, Color.white, (float) 0.09, ID.Trail, handler));
+        handler.addObject(new Trail((int)x, (int)y, 32, 32, Color.white, (float) 0.09, ID.Trail, handler));
+        
+        GameObject player_temp = null;
+        
+        for (int i = 0; i < handler.object.size(); i++) {
+            if (handler.object.get(i).getID() == ID.Player) player_temp = handler.object.get(i);
+        }
+        if (HUD.HEALTH <= 0) handler.removeObject(player_temp);
+        
     }
     
     public void collision() {
     	
     	for (int i = 0; i < handler.object.size(); i++) {
     		GameObject tempObject = handler.object.get(i);
-    		if (tempObject.getID() == ID.basicEnemy || tempObject.getID() == ID.fastEnemy) {
+    		if (tempObject.getID() == ID.basicEnemy || tempObject.getID() == ID.fastEnemy || tempObject.getID() == ID.smartEnemy) {
     			// collision detection
     			if (getBounds().intersects(tempObject.getBounds())) {
     				HUD.HEALTH -= 2;
@@ -49,7 +57,7 @@ public class Player extends GameObject {
 
     public void render(Graphics g) {
     	if(id == ID.Player) g.setColor(Color.white);
-    	g.fillRect(x, y, 32, 32);
+    	g.fillRect((int)x, (int)y, 32, 32);
     }
 
 }

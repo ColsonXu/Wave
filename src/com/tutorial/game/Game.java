@@ -38,9 +38,13 @@ public class Game extends Canvas implements Runnable {
         
         hud = new HUD();
         spawnSystem = new Spawn(handler, hud);
-        handler.addObject(new Player(630, 463, ID.Player, handler));
+        Player: handler.addObject(new Player(630, 463, ID.Player, handler));
+        // Basic Enemy: 
         handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH - 30), r.nextInt(Game.HEIGHT - 30), ID.basicEnemy, handler));
-        handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH - 20), r.nextInt(Game.HEIGHT - 20), ID.fastEnemy, handler));
+        // Fast Enemy: 
+        // handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH - 20), r.nextInt(Game.HEIGHT - 20), ID.fastEnemy, handler));
+        // Smart Enemy: 
+        // handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH - 20), r.nextInt(Game.HEIGHT - 20), ID.smartEnemy, handler));
 
     }
 
@@ -83,7 +87,7 @@ public class Game extends Canvas implements Runnable {
 
             if(System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                // System.out.println("FPS: " + frames);
+                System.out.println("FPS: " + frames);
                 frames = 0;
             }
         }
@@ -118,13 +122,13 @@ public class Game extends Canvas implements Runnable {
         bs.show();
     }
 
-    public static int clamp(int var, int min, int max) {
-    	if (var <= min) {
-    		return var = min;
-    	} else if (var >= max) {
-    		return var = max;
+    public static float clamp(float x, float min, float max) {
+    	if (x <= min) {
+    		return x = min;
+    	} else if (x >= max) {
+    		return x = max;
     	} else {
-    		return var;
+    		return x;
     	}
     }
 
