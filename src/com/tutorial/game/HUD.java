@@ -15,7 +15,7 @@ public class HUD {
 		HEALTH = Game.clamp((float)HEALTH, 0, 100);
 		greenValue = (int) Game.clamp((float)greenValue, 0, 255);
 		greenValue = (int) (HEALTH * 2);
-		score += 0.4;
+		score += 0.9;
 	}
 	
 	public void render(Graphics g) {

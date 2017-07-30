@@ -28,8 +28,8 @@ public class SmartEnemy extends GameObject {
 		y += vY;
 		
 		// Calculate the distance between the SmartEnemy and the player
-		float diffX = x - player.getX() - 16;
-		float diffY = y - player.getY() - 16;
+		float diffX = x - player.getX() - 8;
+		float diffY = y - player.getY() - 8;
 		float distance = (float)Math.sqrt(Math.pow(x - player.getX(), 2) + Math.pow(y - player.getY(), 2));
 		
 		vX = (float)(-3*diffX / distance);

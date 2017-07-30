@@ -27,25 +27,46 @@ public class Game extends Canvas implements Runnable {
     // Create spawn object
     private Spawn spawnSystem;
     private Random r = new Random();
+    private Menu menu;
+    
+    
+    public enum STATE {
+    	Menu,
+    	Game;
+    }
+    
+    public STATE gameState = STATE.Menu;
 
 
     public Game() {
         // Initialize the handler
         handler = new Handler();
         this.addKeyListener(new KeyInput(handler));
+        
+        
         // Create the window
         new Window(WIDTH, HEIGHT, "Let's Build a Game!", this);
         
         hud = new HUD();
         spawnSystem = new Spawn(handler, hud);
-        Player: handler.addObject(new Player(630, 463, ID.Player, handler));
-        // Basic Enemy: 
-        handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH - 30), r.nextInt(Game.HEIGHT - 30), ID.basicEnemy, handler));
-        // Fast Enemy: 
-        // handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH - 20), r.nextInt(Game.HEIGHT - 20), ID.fastEnemy, handler));
-        // Smart Enemy: 
-        // handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH - 20), r.nextInt(Game.HEIGHT - 20), ID.smartEnemy, handler));
-
+        
+        menu = new Menu(this, handler);
+        this.addMouseListener(menu);
+        
+        /*
+        if (gameState == STATE.Game) {
+        	Player: handler.addObject(new Player(630, 463, ID.Player, handler));
+	        // Boss1:
+	        // handler.addObject(new Boss1(r.nextInt(Game.WIDTH - 120), 100, ID.Boss1, handler));
+	        // Basic Enemy: 
+	        handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH - 100), r.nextInt(Game.HEIGHT - 100), ID.basicEnemy, handler));
+	        // Fast Enemy: 
+	        // handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH - 20), r.nextInt(Game.HEIGHT - 20), ID.fastEnemy, handler));
+	        // Smart Enemy: 
+	        // handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH - 20), r.nextInt(Game.HEIGHT - 20), ID.smartEnemy, handler));
+        }
+		*/
+        
     }
 
 
@@ -96,10 +117,13 @@ public class Game extends Canvas implements Runnable {
 
     private void tick() {
         handler.tick();
-        hud.tick();
-        spawnSystem.tick();
+        if (gameState == STATE.Game) {
+            hud.tick();
+            spawnSystem.tick();
+        } else if (gameState == STATE.Menu) {
+        	menu.tick();
+        }
     }
-
 
     private void render() {
         BufferStrategy bs = this.getBufferStrategy();
@@ -116,7 +140,12 @@ public class Game extends Canvas implements Runnable {
         handler.render(g);
         // hud.render() has to be below the handler.render()
         // Otherwise the HUD will be under GameObjects
-        hud.render(g);
+        
+        if (gameState == STATE.Game) {
+            hud.render(g);
+        } else if (gameState == STATE.Menu) {
+        	menu.render(g);
+        }
         
         g.dispose();
         bs.show();
