@@ -4,7 +4,6 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
-import java.util.Random;
 
 /**
  * Created by found on 10-Jul-17.
@@ -26,12 +25,12 @@ public class Game extends Canvas implements Runnable {
     private HUD hud;
     // Create spawn object
     private Spawn spawnSystem;
-    private Random r = new Random();
     private Menu menu;
     
     
     public enum STATE {
     	Menu,
+    	Help,
     	Game;
     }
     
@@ -143,7 +142,7 @@ public class Game extends Canvas implements Runnable {
         
         if (gameState == STATE.Game) {
             hud.render(g);
-        } else if (gameState == STATE.Menu) {
+        } else if (gameState == STATE.Menu || gameState == STATE.Help) {
         	menu.render(g);
         }
         
