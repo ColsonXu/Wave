@@ -2,14 +2,14 @@ package com.tutorial.game;
 
 
 import java.awt.Graphics;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 /**
  * Created by found on 10-Jul-17.
  */
 public class Handler {
 
-    LinkedList<GameObject> object = new LinkedList<GameObject>();
+    ArrayList<GameObject> object = new ArrayList<GameObject>();
 
     public void tick() {
         for (int i = 0; i < object.size(); i++) {
@@ -33,6 +33,14 @@ public class Handler {
     
     public void removeObject(GameObject object) {
         this.object.remove(object);
+    }
+    
+    public void clearEnemy() {
+    	GameObject tmp = null;
+    	for (int i = 0; i <= this.object.size() - 1; i++) {
+    		if (this.object.get(i).getID() != ID.Player) tmp = this.object.get(i);
+    		this.removeObject(tmp);
+    	}
     }
 
 }

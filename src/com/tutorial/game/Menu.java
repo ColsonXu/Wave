@@ -28,6 +28,14 @@ public class Menu extends MouseAdapter {
 			// Play Button
 			if (mouseOver(mX, mY, 455, 340, 400, 130)) {
 				game.gameState = STATE.Game;
+				// Remove the MenuBackground
+				handler.clearEnemy();
+				handler.clearEnemy();
+				handler.clearEnemy();
+				handler.clearEnemy();
+				handler.clearEnemy();
+				handler.clearEnemy();
+				
 				Player: handler.addObject(new Player(630, 463, ID.Player, handler));
 		        // Boss1:
 		        // handler.addObject(new Boss1(r.nextInt(Game.WIDTH - 120), 100, ID.Boss1, handler));

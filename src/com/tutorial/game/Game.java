@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.util.Random;
 
 /**
  * Created by found on 10-Jul-17.
@@ -26,6 +27,7 @@ public class Game extends Canvas implements Runnable {
     // Create spawn object
     private Spawn spawnSystem;
     private Menu menu;
+    private Random r = new Random();
     
     
     public enum STATE {
@@ -65,6 +67,11 @@ public class Game extends Canvas implements Runnable {
 	        // handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH - 20), r.nextInt(Game.HEIGHT - 20), ID.smartEnemy, handler));
         }
 		*/
+        if (gameState == STATE.Menu) {
+        	for (int i = 0; i <= 55; i++) {
+        		handler.addObject(new MenuBackground(r.nextInt(WIDTH - 100), r.nextInt(HEIGHT - 100), ID.MenuBackground, handler));
+        	}
+        }
         
     }
 
