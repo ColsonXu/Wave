@@ -13,11 +13,13 @@ public class Menu extends MouseAdapter {
 	
 	private Game game;
 	private Handler handler;
+	private HUD hud;
 	private Random r = new Random();
 	
-	public Menu(Game game, Handler handler) {
+	public Menu(Game game, Handler handler, HUD hud) {
 		this.game = game;
 		this.handler = handler;
+		this.hud = hud;
 	}
 	
 	public void mousePressed(MouseEvent e) {
@@ -25,10 +27,11 @@ public class Menu extends MouseAdapter {
 		int mY = e.getY();
 		
 		if (game.gameState == STATE.Menu) {
+
 			// Play Button
 			if (mouseOver(mX, mY, 455, 340, 400, 130)) {
 				game.gameState = STATE.Game;
-				// Remove the MenuBackground
+				// Remove MenuBackground
 				handler.clearEnemy();
 				handler.clearEnemy();
 				handler.clearEnemy();
@@ -36,15 +39,10 @@ public class Menu extends MouseAdapter {
 				handler.clearEnemy();
 				handler.clearEnemy();
 				
-				Player: handler.addObject(new Player(630, 463, ID.Player, handler));
-		        // Boss1:
-		        // handler.addObject(new Boss1(r.nextInt(Game.WIDTH - 120), 100, ID.Boss1, handler));
-		        // Basic Enemy: 
-		        handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH - 100), r.nextInt(Game.HEIGHT - 100), ID.basicEnemy, handler));
-		        // Fast Enemy: 
-		        // handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH - 20), r.nextInt(Game.HEIGHT - 20), ID.fastEnemy, handler));
-		        // Smart Enemy: 
-		        // handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH - 20), r.nextInt(Game.HEIGHT - 20), ID.smartEnemy, handler));
+				// Add Player and the first basicEnemy
+				handler.addObject(new Player(630, 463, ID.Player, handler));
+				handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH - 100), r.nextInt(Game.HEIGHT - 100), ID.basicEnemy, handler));
+				
 			}
 			
 			// Help Button
@@ -63,6 +61,20 @@ public class Menu extends MouseAdapter {
 		if (game.gameState == STATE.Help) {
 			if (mouseOver(mX, mY, 455, 660, 400, 130)) {
 				game.gameState = STATE.Menu;
+			}
+		}
+		
+		if (game.gameState == STATE.End) {
+			// Reset Button
+			if (mouseOver(mX, mY, 455, 660, 400, 130)) {
+				handler.object.clear();
+				HUD.HEALTH = 100;
+				hud.setLevel(1);
+				hud.setScore(0);
+				game.gameState = STATE.Menu;
+				for (int i = 0; i <= 55; i++) {
+	        		handler.addObject(new MenuBackground(r.nextInt(Game.WIDTH - 100), r.nextInt(Game.HEIGHT - 100), ID.MenuBackground, handler));
+	        	}
 			}
 		}
 	}
@@ -91,7 +103,7 @@ public class Menu extends MouseAdapter {
 			// Menu Title
 			g.setFont(fnt);
 			g.setColor(Color.white);
-			g.drawString("Menu", 526, 280);
+			g.drawString("W A V E", 465, 240);
 			
 			// Play Button
 			g.setColor(Color.white);
@@ -117,7 +129,7 @@ public class Menu extends MouseAdapter {
 			// Help Menu Title
 			g.setFont(fnt);
 			g.setColor(Color.white);
-			g.drawString("Help", 526, 280);
+			g.drawString("Help", 550, 240);
 			
 			// Help
 			g.setFont(fnt_help);
@@ -129,6 +141,22 @@ public class Menu extends MouseAdapter {
 			g.setFont(fnt2);
 			g.setColor(Color.red);
 			g.drawString("Back", 575, 742);
+		} else if (game.gameState == STATE.End) {
+			// Game Over Title
+			g.setFont(fnt);
+			g.setColor(Color.white);
+			g.drawString("GAME OVER", 360, 300);
+			
+			// Final Score
+			g.setFont(fnt_help);
+			g.drawString("You lost with a score of: " + (int)hud.getScore(), 400, 430);
+			
+			// Reset Button
+			g.setColor(Color.red);
+			g.drawRect(455, 660, 400, 130);
+			g.setFont(fnt2);
+			g.setColor(Color.red);
+			g.drawString("Back", 570, 746);
 		}
 	}
 	

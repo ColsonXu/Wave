@@ -7,14 +7,13 @@ import java.util.ArrayList;
 /**
  * Created by found on 10-Jul-17.
  */
-public class Handler {
+	public class Handler {
 
     ArrayList<GameObject> object = new ArrayList<GameObject>();
 
     public void tick() {
         for (int i = 0; i < object.size(); i++) {
             GameObject tempObject = object.get(i);
-
             tempObject.tick();
         }
     }
@@ -22,7 +21,6 @@ public class Handler {
     public void render(Graphics g) {
         for (int i = 0; i < object.size(); i++) {
             GameObject tempObject = object.get(i);
-
             tempObject.render(g);
         }
     }

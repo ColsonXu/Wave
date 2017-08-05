@@ -33,7 +33,8 @@ public class Game extends Canvas implements Runnable {
     public enum STATE {
     	Menu,
     	Help,
-    	Game;
+    	Game,
+    	End;
     }
     
     public STATE gameState = STATE.Menu;
@@ -51,7 +52,7 @@ public class Game extends Canvas implements Runnable {
         hud = new HUD();
         spawnSystem = new Spawn(handler, hud);
         
-        menu = new Menu(this, handler);
+        menu = new Menu(this, handler, hud);
         this.addMouseListener(menu);
         
         /*
@@ -67,12 +68,12 @@ public class Game extends Canvas implements Runnable {
 	        // handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH - 20), r.nextInt(Game.HEIGHT - 20), ID.smartEnemy, handler));
         }
 		*/
+        
         if (gameState == STATE.Menu) {
         	for (int i = 0; i <= 55; i++) {
         		handler.addObject(new MenuBackground(r.nextInt(WIDTH - 100), r.nextInt(HEIGHT - 100), ID.MenuBackground, handler));
         	}
         }
-        
     }
 
 
@@ -126,8 +127,22 @@ public class Game extends Canvas implements Runnable {
         if (gameState == STATE.Game) {
             hud.tick();
             spawnSystem.tick();
-        } else if (gameState == STATE.Menu) {
+        } else if (gameState == STATE.Menu || gameState == STATE.End) {
         	menu.tick();
+        }
+        
+        // When Health reaches 0
+        GameObject player_temp = null;
+        GameObject smart_enemy = null;
+        
+        for (int i = 0; i < handler.object.size(); i++) {
+            if (handler.object.get(i).getID() == ID.Player) player_temp = handler.object.get(i);
+            if (handler.object.get(i).getID() == ID.smartEnemy) smart_enemy = handler.object.get(i);
+        }
+        if (HUD.HEALTH <= 0) {
+        	handler.removeObject(player_temp);
+        	handler.removeObject(smart_enemy);
+        	gameState = STATE.End;
         }
     }
 
@@ -149,7 +164,7 @@ public class Game extends Canvas implements Runnable {
         
         if (gameState == STATE.Game) {
             hud.render(g);
-        } else if (gameState == STATE.Menu || gameState == STATE.Help) {
+        } else if (gameState == STATE.Menu || gameState == STATE.Help || gameState == STATE.End) {
         	menu.render(g);
         }
         

@@ -7,7 +7,7 @@ import java.awt.*;
  */
 public class Player extends GameObject {
 
-	Handler handler;
+	private Handler handler;
 	
     public Player(int x, int y, ID id, Handler handler) {
         super(x, y, id);
@@ -31,19 +31,6 @@ public class Player extends GameObject {
         collision();
         
         handler.addObject(new Trail((int)x, (int)y, 32, 32, Color.white, (float) 0.09, ID.Trail, handler));
-        
-        GameObject player_temp = null;
-        GameObject smart_enemy = null;
-        
-        for (int i = 0; i < handler.object.size(); i++) {
-            if (handler.object.get(i).getID() == ID.Player) player_temp = handler.object.get(i);
-            if (handler.object.get(i).getID() == ID.smartEnemy) smart_enemy = handler.object.get(i);
-        }
-        if (HUD.HEALTH <= 0) {
-        	handler.removeObject(player_temp);
-        	handler.removeObject(smart_enemy);
-        }
-        
     }
     
     public void collision() {
